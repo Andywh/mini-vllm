@@ -14,14 +14,14 @@ class MiniRequest:
     request_id: str
     prompt_token_ids : list[int]
     max_tokens : int = 16
-    num_computed_token : int = 0
+    num_computed_tokens : int = 0
     output_token_ids : list[int] = field(default_factory=list)
     status: RequestStatus = RequestStatus.WAITING
     eos_token_id: int = 2
 
     @property
     def all_token_ids(self) -> list[int]:
-        return self.output_token_ids + self.prompt_token_ids
+        return self.prompt_token_ids + self.output_token_ids
 
     def is_finished(self) -> bool:
         return self.status == RequestStatus.FINISHED
