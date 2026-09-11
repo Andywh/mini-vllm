@@ -9,6 +9,7 @@ class MiniEngine:
         self.scheduler = MiniScheduler()
         self.model_runner = MiniModelRunner()
         self.output_processor = MiniOutputProcessor()
+        ## engine 管理 scheduler
         self._id = 0
 
     def add_request(self, prompt_token_ids: list[int], max_tokens: int = 16) -> str:
