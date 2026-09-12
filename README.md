@@ -11,6 +11,7 @@
 | `MiniScheduler` | `v1/core/sched/scheduler.py` |
 | `MiniModelRunner` | `GPUModelRunner`（mock） |
 | `MiniOutputProcessor` | `v1/engine/output_processor.py` |
+| `MiniKVCacheManager` / `MiniBlockPool` | `v1/core/kv_cache_manager.py` + `block_pool.py` |
 
 ## 目录（扁平，无子包）
 
@@ -23,6 +24,8 @@ mini-vllm/
   model_runner.py      # MiniModelRunner
   output_processor.py  # MiniOutputProcessor
   request.py           # MiniRequest
+  kv_cache.py          # 分页 KV（PagedAttention 的管理侧）
+  demo_paged_kv.py     # 只演示 allocate/block_table/free
 ```
 
 ## 阶段
@@ -30,6 +33,7 @@ mini-vllm/
 1. **已实现**：单请求；每 step 1 token；mock 采样
 2. **待填**：多请求 waiting，每步只调度 1 个
 3. **待填**：一步 batch 多个 decode
+4. **已实现（KV）**：`kv_cache.py` 分页块池 + schedule 时 allocate_slots
 
 ## 运行
 
@@ -37,6 +41,7 @@ mini-vllm/
 cd /Users/andy/Documents/zelda/mini-vllm
 source .venv/bin/activate
 python main.py
+python demo_paged_kv.py   # 看 block_table 如何增长
 ```
 
 ## 练习顺序
